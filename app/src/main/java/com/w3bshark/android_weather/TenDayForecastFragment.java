@@ -3,17 +3,22 @@ package com.w3bshark.android_weather;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.view.menu.MenuView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
 /**
- * Created by Tyler on 6/28/2015.
+ * Created by w3bshark on 6/28/2015.
  */
 public class TenDayForecastFragment extends Fragment {
 
@@ -22,6 +27,31 @@ public class TenDayForecastFragment extends Fragment {
     private ArrayList<Day> days;
     private View mCoordinatorLayoutView;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.tendayforecastfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                initializeData();
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -46,11 +76,11 @@ public class TenDayForecastFragment extends Fragment {
         days = new ArrayList<>();
 //        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
 
-        OWMRestClient client = new OWMRestClient();
 //        String postalCode = savedInstanceState.getString(MainActivity.POSTALCODEKEY);
         MainActivity mainActivity = (MainActivity) getActivity();
         String postalCode = mainActivity.getPostalCode();
-        days = client.get10DayForecast(postalCode);
+        TenDayForecastHandler tenDayForecastHandler = new TenDayForecastHandler(getActivity().getApplicationContext());
+        tenDayForecastHandler.execute(postalCode);
     }
 
     private void initializeAdapter(){

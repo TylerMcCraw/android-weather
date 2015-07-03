@@ -18,13 +18,4 @@ import java.util.List;
  */
 public class OWMRestClient {
 
-    private final static String OWMBASEURL = "http://api.openweathermap.org/data/";
-    private final static String OWMVERSION = "2.5";
-    private final static String OWMAPIKEY = "APPID=022d10b654648a3097c21e889f15539a";
-    private HttpURLConnection urlConnection = null;
-    private BufferedReader reader = null;
-
-    public OWMRestClient() {
-
-    }
 }
