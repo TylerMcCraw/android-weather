@@ -1,4 +1,4 @@
-package com.w3bshark.weather;
+package com.w3bshark.android_weather;
 
 import java.util.Calendar;
 

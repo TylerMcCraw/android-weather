@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.w3bshark.weather"
+        applicationId "com.w3bshark.android_weather"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1

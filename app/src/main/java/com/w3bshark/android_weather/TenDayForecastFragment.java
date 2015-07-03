@@ -1,6 +1,5 @@
-package com.w3bshark.weather;
+package com.w3bshark.android_weather;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -12,17 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by Tyler on 6/28/2015.
  */
-public class TenDayForecast extends Fragment {
+public class TenDayForecastFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Day> days;
+    private ArrayList<Day> days;
     private View mCoordinatorLayoutView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +44,13 @@ public class TenDayForecast extends Fragment {
 
     private void initializeData(){
         days = new ArrayList<>();
-        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
+//        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
+
+        OWMRestClient client = new OWMRestClient();
+//        String postalCode = savedInstanceState.getString(MainActivity.POSTALCODEKEY);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        String postalCode = mainActivity.getPostalCode();
+        days = client.get10DayForecast(postalCode);
     }
 
     private void initializeAdapter(){

@@ -1,4 +1,4 @@
-package com.w3bshark.weather;
+package com.w3bshark.android_weather;
 
 /**
  * Created by w3bshark on 6/27/2015.
