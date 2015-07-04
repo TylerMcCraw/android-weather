@@ -1,16 +1,20 @@
-Sunshine
+#android-weather
 ========
+This is the companion Android app for the Udacity course [Developing Android Apps: Android Fundamentals](https://www.udacity.com/course/ud853), in which students are instructed to rebuild the application, [Sunshine (v2)](https://github.com/udacity/Sunshine-Version-2).
 
-Sunshine is the companion Android app for the Udacity course [Developing Android Apps: Android Fundamentals](https://www.udacity.com/course/ud853).
+## Usage
 
-Take the course to find out how to build this app a step at a time, and eventually create your own Android App!
+android-weather allows users to view the current ten-day forecast for their current location.
+This data is pulled from OpenWeatherMap, an open-source API for retrieving weather data across the world.
 
-This is the second version of the Sunshine code. The repository has been updated on:
+## Credits
 
-* **February 13th, 2015** - Major update
-* February 25, 2015 - Minor bug fixes
-* March 4th, 2015 - Minor bug fixes
+Inspirational design of application: https://github.com/udacity/Sunshine-Version-2
 
-For the original version, please go [here](https://github.com/udacity/Sunshine).
+OpenWeatherMap API: http://openweathermap.org/api
 
-A changelog for the course can be found [here](https://docs.google.com/a/knowlabs.com/document/d/193xJb_OpcNCqgquMhxPrMh05IEYFXQqt0S6-6YK8gBw/pub).
+Weather Material Design Icons: https://materialdesignicons.com/
+
+## License
+
+MIT License
