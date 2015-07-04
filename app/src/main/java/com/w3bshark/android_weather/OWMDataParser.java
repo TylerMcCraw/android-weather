@@ -1,7 +1,5 @@
 package com.w3bshark.android_weather;
 
-import android.widget.Switch;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +12,7 @@ import java.util.GregorianCalendar;
  * Created by w3bshark on 7/3/2015.
  */
 public class OWMDataParser {
-    
+
     // These are the names of the JSON objects that need to be extracted.
     private final static String OWM_LIST = "list";
     private final static String OWM_WEATHER = "weather";

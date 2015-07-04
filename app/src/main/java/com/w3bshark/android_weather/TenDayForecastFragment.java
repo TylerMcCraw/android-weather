@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class TenDayForecastFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private RecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Day> days;
     private View mCoordinatorLayoutView;
@@ -80,8 +81,14 @@ public class TenDayForecastFragment extends Fragment {
         {
             @Override
             protected void onPostExecute(ArrayList<Day> result) {
-                days = result;
-                initializeAdapter();
+                days.clear();
+                days.addAll(result);
+                if (mRecyclerAdapter == null) {
+                    initializeAdapter();
+                }
+                else {
+                    mRecyclerAdapter.notifyDataSetChanged();
+                }
             }
         };
         tenDayForecastHandler.execute(postalCode);
@@ -130,7 +137,7 @@ public class TenDayForecastFragment extends Fragment {
             }
         };
 
-        RecyclerAdapter adapter = new RecyclerAdapter(days, clickListener);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerAdapter = new RecyclerAdapter(days, clickListener);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 }

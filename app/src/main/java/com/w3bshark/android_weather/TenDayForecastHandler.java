@@ -98,7 +98,6 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Da
                 return null;
             }
             forecastResponse = buffer.toString();
-            Log.v(LOG_TAG, forecastResponse);
 
             try {
                 forecastDays = OWMDataParser.getWeatherDataFromJson(forecastResponse);
