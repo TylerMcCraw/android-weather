@@ -3,11 +3,9 @@ package com.w3bshark.android_weather;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.internal.view.menu.MenuView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by w3bshark on 6/28/2015.
@@ -43,6 +42,8 @@ public class TenDayForecastFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 initializeData();
+                initializeAdapter();
+                mRecyclerView.refreshDrawableState();
                 return true;
             case R.id.action_settings:
                 return true;
@@ -67,19 +68,24 @@ public class TenDayForecastFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         initializeData();
-        initializeAdapter();
 
         return rootView;
     }
 
     private void initializeData(){
         days = new ArrayList<>();
-//        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
+        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
 
-//        String postalCode = savedInstanceState.getString(MainActivity.POSTALCODEKEY);
         MainActivity mainActivity = (MainActivity) getActivity();
         String postalCode = mainActivity.getPostalCode();
-        TenDayForecastHandler tenDayForecastHandler = new TenDayForecastHandler(getActivity().getApplicationContext());
+        TenDayForecastHandler tenDayForecastHandler = new TenDayForecastHandler(getActivity().getApplicationContext())
+        {
+            @Override
+            protected void onPostExecute(ArrayList<Day> result) {
+                days = result;
+                initializeAdapter();
+            }
+        };
         tenDayForecastHandler.execute(postalCode);
     }
 

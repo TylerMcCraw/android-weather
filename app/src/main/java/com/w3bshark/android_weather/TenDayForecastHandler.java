@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by w3bshark on 7/3/2015.
  */
-public class TenDayForecastHandler extends AsyncTask <String, Void, Void> {
+public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Day>> {
 
     private final static String LOG_TAG = TenDayForecastHandler.class.getSimpleName();
     private Context context;
@@ -35,7 +37,7 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, Void> {
     private final static String OWM_APIKEY = "022d10b654648a3097c21e889f15539a";
     private String dataProtocol = "http";
     private String dataMode = "json";
-    private String dataUnits = "metric";
+    private String dataUnits = "imperial";
     private String dataDays = "10";
     private String dataCountryCode = "us";
     private HttpURLConnection urlConnection = null;
@@ -46,14 +48,15 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected ArrayList<Day> doInBackground(String... params) {
         tenDayForecast = getTenDayForecast(params[0]);
-        return null;
+        return tenDayForecast;
     }
 
     private ArrayList<Day> getTenDayForecast(String postalCode) {
 
-        String forecastResponse = "";
+        ArrayList<Day> forecastDays = null;
+        String forecastResponse;
 
         if (postalCode.isEmpty()) {
             postalCode = "94043";
@@ -96,6 +99,12 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, Void> {
             }
             forecastResponse = buffer.toString();
             Log.v(LOG_TAG, forecastResponse);
+
+            try {
+                forecastDays = OWMDataParser.getWeatherDataFromJson(forecastResponse, 10);
+            } catch (JSONException e) {
+                //TODO: handle exception appropriately
+            }
         } catch (IOException e) {
             Log.e(LOG_TAG, context.getString(R.string.error), e);
             return null;
@@ -112,13 +121,7 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, Void> {
             }
         }
 
-        return parseResponseIntoDays(forecastResponse);
-    }
-
-    private ArrayList<Day> parseResponseIntoDays(String restResponse) {
-        ArrayList<Day> days = new ArrayList<>();
-
-        return days;
+        return forecastDays;
     }
 
 }
