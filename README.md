@@ -1,5 +1,4 @@
 #android-weather
-========
 This is the companion Android app for the Udacity course [Developing Android Apps: Android Fundamentals](https://www.udacity.com/course/ud853), in which students are instructed to rebuild the application, [Sunshine (v2)](https://github.com/udacity/Sunshine-Version-2).
 
 ## Usage
