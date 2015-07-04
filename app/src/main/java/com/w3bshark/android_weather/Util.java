@@ -5,24 +5,6 @@ package com.w3bshark.android_weather;
  */
 public final class Util {
 
-    public enum WeatherTypes {
-        SUNNY("Sunny"),
-        CLOUDY("Cloudy"),
-        FOGGY("Foggy"),
-        RAINY("Rainy");
-
-        private final String text;
-
-        WeatherTypes(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
-    };
-
     public static double convertFahrenheitToCelcius(double degreesInFahrenheit) {
         return (degreesInFahrenheit - 32) * 5/9;
     }

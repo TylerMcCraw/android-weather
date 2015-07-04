@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,8 +22,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
         ImageView appPhoto;
         TextView dayOfWeek;
         TextView weatherType;
-        TextView tempFahrenheit;
-        TextView tempCelcius;
+        TextView tempMax;
+        TextView tempMin;
 
         DayViewHolder(View itemView) {
             super(itemView);
@@ -31,8 +31,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
             appPhoto = (ImageView)itemView.findViewById(R.id.app_photo);
             dayOfWeek = (TextView)itemView.findViewById(R.id.dayOfWeek);
             weatherType = (TextView)itemView.findViewById(R.id.weatherType);
-            tempFahrenheit = (TextView)itemView.findViewById(R.id.tempFahrenheit);
-            tempCelcius = (TextView)itemView.findViewById(R.id.tempCelcius);
+            tempMax = (TextView)itemView.findViewById(R.id.tempMax);
+            tempMin = (TextView)itemView.findViewById(R.id.tempMin);
         }
     }
 
@@ -52,15 +52,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
 
     @Override
     public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
-
         dayViewHolder.cv.setTag(days.get(i).date);
         dayViewHolder.appPhoto.setImageResource(days.get(i).photoId);
-        dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherType.toString());
-        dayViewHolder.dayOfWeek.setText(dayFormat.format(days.get(i).date.getTime()));
-        dayViewHolder.weatherType.setText(days.get(i).weatherType.toString());
-        dayViewHolder.tempFahrenheit.setText(String.format("%.1f",days.get(i).tempFahrenheit).concat("\u00B0 F"));
-        dayViewHolder.tempCelcius.setText(String.format( "%.1f",days.get(i).tempCelcius).concat("\u00B0 C"));
+        dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherDescription);
+        dayViewHolder.dayOfWeek.setText(days.get(i).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
+        dayViewHolder.weatherType.setText(days.get(i).weatherDescription);
+        dayViewHolder.tempMax.setText(String.format("%.1f",days.get(i).tempMax).concat("\u00B0"));
+        dayViewHolder.tempMin.setText(String.format( "%.1f",days.get(i).tempMin).concat("\u00B0"));
         dayViewHolder.cv.setOnClickListener(clickListener);
     }
 

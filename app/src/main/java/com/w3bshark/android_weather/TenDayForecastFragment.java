@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by w3bshark on 6/28/2015.
@@ -74,7 +73,6 @@ public class TenDayForecastFragment extends Fragment {
 
     private void initializeData(){
         days = new ArrayList<>();
-        days.add(new Day(Calendar.getInstance(), 90.4, Util.WeatherTypes.SUNNY, R.drawable.ic_launcher));
 
         MainActivity mainActivity = (MainActivity) getActivity();
         String postalCode = mainActivity.getPostalCode();

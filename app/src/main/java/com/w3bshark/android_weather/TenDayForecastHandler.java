@@ -101,7 +101,7 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Da
             Log.v(LOG_TAG, forecastResponse);
 
             try {
-                forecastDays = OWMDataParser.getWeatherDataFromJson(forecastResponse, 10);
+                forecastDays = OWMDataParser.getWeatherDataFromJson(forecastResponse);
             } catch (JSONException e) {
                 //TODO: handle exception appropriately
             }

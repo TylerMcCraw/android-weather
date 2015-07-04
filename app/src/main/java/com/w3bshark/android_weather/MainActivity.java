@@ -17,7 +17,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-//    public final static String POSTALCODEKEY = "POSTALCODE";
     public String postalCode = "";
     private final static long LOC_REFRESH_TIME = 0;
     private final static float LOC_REFRESH_DISTANCE = 100;
@@ -40,19 +39,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
+        public void onStatusChanged(String provider, int status, Bundle extras) { }
 
         @Override
-        public void onProviderEnabled(String provider) {
-
-        }
+        public void onProviderEnabled(String provider) { }
 
         @Override
-        public void onProviderDisabled(String provider) {
-
-        }
+        public void onProviderDisabled(String provider) { }
     };
 
     @Override
@@ -65,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 LOC_REFRESH_DISTANCE, mLocationListener);
 
         if (savedInstanceState == null) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString(POSTALCODEKEY, postalCode);
-//            TenDayForecastFragment tenDayForecastFragment = new TenDayForecastFragment();
-//            tenDayForecast.setArguments(bundle);
-
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new TenDayForecastFragment())
                     .commit();

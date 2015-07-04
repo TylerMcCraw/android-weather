@@ -1,19 +1,20 @@
 package com.w3bshark.android_weather;
 
+import android.widget.Switch;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * Created by w3bshark on 7/3/2015.
  */
 public class OWMDataParser {
-
-    private final static String LOG_TAG = OWMDataParser.class.getSimpleName();
-
+    
     // These are the names of the JSON objects that need to be extracted.
     private final static String OWM_LIST = "list";
     private final static String OWM_WEATHER = "weather";
@@ -21,6 +22,7 @@ public class OWMDataParser {
     private final static String OWM_MAX = "max";
     private final static String OWM_MIN = "min";
     private final static String OWM_DESCRIPTION = "main";
+    private final static String OWM_ICON = "icon";
 
     /**
      * Take the String representing the complete forecast in JSON Format and
@@ -29,7 +31,7 @@ public class OWMDataParser {
      * Fortunately parsing is easy: constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    public static ArrayList<Day> getWeatherDataFromJson(String forecastJsonStr, int numDays)
+    public static ArrayList<Day> getWeatherDataFromJson(String forecastJsonStr)
             throws JSONException {
 
         JSONObject forecastJson = new JSONObject(forecastJsonStr);
@@ -43,32 +45,74 @@ public class OWMDataParser {
         // current day, we're going to take advantage of that to get a nice
         // normalized UTC date for all of our weather.
 
-        GregorianCalendar gc = new GregorianCalendar();
 
         ArrayList<Day> forecastDays = new ArrayList<>();
-        for(int i = 0; i < weatherArray.length(); i++) {
-            String description;
-
+        for (int i = 0; i < weatherArray.length(); i++) {
             // Get the JSON object representing the day
             JSONObject dayForecast = weatherArray.getJSONObject(i);
 
-            gc.add(GregorianCalendar.DAY_OF_YEAR, i);
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.add(Calendar.DAY_OF_MONTH, i);
 
             // description is in a child array called "weather", which is 1 element long.
             JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
-            description = weatherObject.getString(OWM_DESCRIPTION);
+            String description = weatherObject.getString(OWM_DESCRIPTION);
+            String icon = weatherObject.getString(OWM_ICON);
 
             // Temperatures are in a child object called "temp".  Try not to name variables
             // "temp" when working with temperature.  It confuses everybody.
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-            double high = temperatureObject.getDouble(OWM_MAX);
-//            double low = temperatureObject.getDouble(OWM_MIN);
 
-            Day currDay = new Day(gc, high, Util.WeatherTypes.CLOUDY, 0);
+            int iconID;
+            switch (icon)
+            {
+                case "01d":
+                    iconID = R.drawable.weather_sunny;
+                    break;
+                case "01n":
+                    iconID = R.drawable.weather_night;
+                    break;
+                case "02d":
+                case "02n":
+                    iconID = R.drawable.weather_partlycloudy;
+                    break;
+                case "03d":
+                case "03n":
+                    iconID = R.drawable.weather_cloudy;
+                    break;
+                case "04d":
+                case "04n":
+                    iconID = R.drawable.weather_partlycloudy;
+                    break;
+                case "09d":
+                case "09n":
+                    iconID = R.drawable.weather_pouring;
+                    break;
+                case "10d":
+                case "10n":
+                    iconID = R.drawable.weather_rainy;
+                    break;
+                case "11d":
+                case "11n":
+                    iconID = R.drawable.weather_lightning;
+                    break;
+                case "13d":
+                case "13n":
+                    iconID = R.drawable.weather_snowy;
+                    break;
+                case "50d":
+                case "50n":
+                    iconID = R.drawable.weather_rainy;
+                    break;
+                default:
+                    iconID = R.drawable.weather_sunny;
+                    break;
+            }
+
+            Day currDay = new Day(gc, temperatureObject.getDouble(OWM_MAX), temperatureObject.getDouble(OWM_MIN), description, iconID);
             forecastDays.add(currDay);
         }
 
         return forecastDays;
-
     }
 }
