@@ -12,6 +12,8 @@ Inspirational design of application: https://github.com/udacity/Sunshine-Version
 
 OpenWeatherMap API: http://openweathermap.org/api
 
+Determining last, most accurate location: http://android-developers.blogspot.com/2011/06/deep-dive-into-location.html
+
 Weather Material Design Icons: https://materialdesignicons.com/
 
 ## License
