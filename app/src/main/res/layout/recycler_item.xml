@@ -6,8 +6,10 @@
     android:layout_height="wrap_content"
     android:id="@+id/cv"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardElevation="0sp"
-    card_view:cardUseCompatPadding="false">
+    card_view:cardElevation="0dp"
+    card_view:cardMaxElevation="0dp"
+    card_view:cardCornerRadius="1dp"
+    card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.w3bshark.android_weather;
 
 import android.content.Context;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by w3bshark on 7/3/2015.
  */
-public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Day>> {
+public class TenDayForecastHandler extends AsyncTask <Location, Void, ArrayList<Day>> {
 
     private final static String LOG_TAG = TenDayForecastHandler.class.getSimpleName();
     private Context context;
@@ -29,7 +30,8 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Da
     private final static String OWM_DATA = "data";
     private final static String OWM_FORECAST = "forecast";
     private final static String OWM_DAILY = "daily";
-    private final static String OWM_PARAM_ZIP = "zip";
+    private final static String OWM_PARAM_LATITUDE = "lat";
+    private final static String OWM_PARAM_LONGITUDE = "lon";
     private final static String OWM_PARAM_MODE = "mode";
     private final static String OWM_PARAM_UNITS = "units";
     private final static String OWM_PARAM_DAYCOUNT = "cnt";
@@ -48,19 +50,15 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Da
     }
 
     @Override
-    protected ArrayList<Day> doInBackground(String... params) {
+    protected ArrayList<Day> doInBackground(Location... params) {
         tenDayForecast = getTenDayForecast(params[0]);
         return tenDayForecast;
     }
 
-    private ArrayList<Day> getTenDayForecast(String postalCode) {
+    private ArrayList<Day> getTenDayForecast(Location location) {
 
         ArrayList<Day> forecastDays = null;
         String forecastResponse;
-
-        if (postalCode.isEmpty()) {
-            postalCode = "94043";
-        }
 
         try {
             Uri.Builder builder = new Uri.Builder();
@@ -70,7 +68,8 @@ public class TenDayForecastHandler extends AsyncTask <String, Void, ArrayList<Da
                     .appendPath(OWM_VERSION)
                     .appendPath(OWM_FORECAST)
                     .appendPath(OWM_DAILY)
-                    .appendQueryParameter(OWM_PARAM_ZIP, postalCode.concat(",").concat(dataCountryCode))
+                    .appendQueryParameter(OWM_PARAM_LATITUDE, Double.toString(location.getLatitude()))
+                    .appendQueryParameter(OWM_PARAM_LONGITUDE, Double.toString(location.getLongitude()))
                     .appendQueryParameter(OWM_PARAM_MODE, dataMode)
                     .appendQueryParameter(OWM_PARAM_UNITS, dataUnits)
                     .appendQueryParameter(OWM_PARAM_DAYCOUNT, dataDays)

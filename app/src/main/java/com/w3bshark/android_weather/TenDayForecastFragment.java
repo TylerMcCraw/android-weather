@@ -1,5 +1,6 @@
 package com.w3bshark.android_weather;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -78,7 +79,7 @@ public class TenDayForecastFragment extends Fragment {
         days = new ArrayList<>();
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        String postalCode = mainActivity.getPostalCode();
+        Location location = mainActivity.getLocation();
         TenDayForecastHandler tenDayForecastHandler = new TenDayForecastHandler(getActivity().getApplicationContext())
         {
             @Override
@@ -93,7 +94,7 @@ public class TenDayForecastFragment extends Fragment {
                 }
             }
         };
-        tenDayForecastHandler.execute(postalCode);
+        tenDayForecastHandler.execute(location);
     }
 
     private void initializeAdapter(){
