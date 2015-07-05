@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by w3bshark on 6/28/2015.
@@ -99,41 +101,19 @@ public class TenDayForecastFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String snackMessage = "";
-                if (v instanceof CardView) {
-                    CardView cv = (CardView) v;
-                    int cardViewID;
-                    try {
-                        cardViewID = Integer.parseInt(cv.getTag().toString());
-                    } catch (NumberFormatException nfe) {
-                        cardViewID = 0;
-                    }
-//                    switch(cardViewID)
-//                    {
-//                        case 0:
-//                            snackMessage = getString(R.string.app_spotify_streamer);
-//                            break;
-//                        case 1:
-//                            snackMessage = getString(R.string.app_scores);
-//                            break;
-//                        case 2:
-//                            snackMessage = getString(R.string.app_library);
-//                            break;
-//                        case 3:
-//                            snackMessage = getString(R.string.app_build_it_bigger);
-//                            break;
-//                        case 4:
-//                            snackMessage = getString(R.string.app_xyz_reader);
-//                            break;
-//                        case 5:
-//                            snackMessage = getString(R.string.app_capstone);
-//                            break;
-//                        default:
-//                            snackMessage = getString(R.string.error);
+                int itemPosition = mRecyclerView.getChildPosition(v);
+                snackMessage = days.get(itemPosition).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+//                if (v instanceof CardView) {
+//                    CardView cv = (CardView) v;
+//                    int cardViewID;
+//                    try {
+//                        cardViewID = Integer.parseInt(cv.getTag().toString());
+//                    } catch (NumberFormatException nfe) {
+//                        cardViewID = 0;
 //                    }
 //                }
-                    Snackbar.make(mCoordinatorLayoutView, snackMessage, Snackbar.LENGTH_SHORT)
-                            .show();
-                }
+                Snackbar.make(mCoordinatorLayoutView, snackMessage, Snackbar.LENGTH_SHORT)
+                        .show();
             }
         };
 
