@@ -118,7 +118,7 @@ public class TenDayForecastFragment extends Fragment {
             }
         };
 
-        mRecyclerAdapter = new RecyclerAdapter(days, clickListener);
+        mRecyclerAdapter = new RecyclerAdapter(getActivity(), days, clickListener);
         mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 }

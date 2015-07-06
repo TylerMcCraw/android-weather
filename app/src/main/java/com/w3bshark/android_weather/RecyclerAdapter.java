@@ -1,10 +1,14 @@
 package com.w3bshark.android_weather;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,10 +40,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
         }
     }
 
+    Context context;
     List<Day> days;
     View.OnClickListener clickListener;
 
-    RecyclerAdapter(List<Day> days, View.OnClickListener clickListener) {
+    RecyclerAdapter(Context context, List<Day> days, View.OnClickListener clickListener) {
+        this.context = context;
         this.days = days;
         this.clickListener = clickListener;
     }
@@ -52,6 +58,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
 
     @Override
     public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
+        if (i == 0) {
+            //TODO: change the first day to a static view, cardview isn't going to work.
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int height = size.y;
+            if (height == 0) {
+                height = 300;
+            }
+            else {
+                height = height * 2/5;
+            }
+            dayViewHolder.cv.setMinimumHeight(height);
+            dayViewHolder.cv.setCardBackgroundColor(context.getResources().getColor(R.color.background));
+            TextView dayOfWeek = (TextView)dayViewHolder.cv.findViewById(R.id.dayOfWeek);
+            TextView weatherType = (TextView)dayViewHolder.cv.findViewById(R.id.weatherType);
+            TextView tempMax = (TextView)dayViewHolder.cv.findViewById(R.id.tempMax);
+            TextView tempMin = (TextView)dayViewHolder.cv.findViewById(R.id.tempMin);
+            dayOfWeek.setTextColor(context.getResources().getColor(R.color.white));
+            weatherType.setTextColor(context.getResources().getColor(R.color.white));
+            tempMax.setTextColor(context.getResources().getColor(R.color.white));
+            tempMin.setTextColor(context.getResources().getColor(R.color.white));
+        }
         dayViewHolder.cv.setTag(days.get(i).date);
         dayViewHolder.appPhoto.setImageResource(days.get(i).photoId);
         dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherDescription);
