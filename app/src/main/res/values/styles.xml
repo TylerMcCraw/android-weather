@@ -1,10 +1,12 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
         <item name="colorPrimary">@color/background</item>
         <item name="colorPrimaryDark">@color/statusbar</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextStyle</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
     <!-- ActionBar Style -->
@@ -32,5 +34,10 @@
     <color name="actionbar">#4FC3F7</color>
     <color name="statusbar">#03A9F4</color>
     <color name="background">#4FC3F7</color>
+
+    <!-- Fonts -->
+    <style name="AppTheme.TextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 
 </resources>

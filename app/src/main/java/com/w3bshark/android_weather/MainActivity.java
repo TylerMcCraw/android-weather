@@ -11,9 +11,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.List;
 
@@ -67,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (getSupportActionBar() != null) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowHomeEnabled(false);
+            View mActionBarView = getLayoutInflater().inflate(R.layout.main_action_bar, null);
+            actionBar.setCustomView(mActionBarView);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        }
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 //        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MAX_TIME,
