@@ -51,14 +51,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
     }
 
     @Override
-    public DayViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item, viewGroup, false);
-        return new DayViewHolder(v);
+    public int getItemViewType(int position) {
+        switch (position) {
+            case 0:
+                return 0;
+            default:
+                return 1;
+        }
     }
 
     @Override
-    public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
+    public DayViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v;
         if (i == 0) {
+            v = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.recycler_item_first_day, viewGroup, false);
             //TODO: change the first day to a static view, cardview isn't going to work.
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Display display = wm.getDefaultDisplay();
@@ -71,21 +78,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
             else {
                 height = height * 2/5;
             }
-            dayViewHolder.cv.setMinimumHeight(height);
-            dayViewHolder.cv.setCardBackgroundColor(context.getResources().getColor(R.color.background));
-            TextView dayOfWeek = (TextView)dayViewHolder.cv.findViewById(R.id.dayOfWeek);
-            TextView weatherType = (TextView)dayViewHolder.cv.findViewById(R.id.weatherType);
-            TextView tempMax = (TextView)dayViewHolder.cv.findViewById(R.id.tempMax);
-            TextView tempMin = (TextView)dayViewHolder.cv.findViewById(R.id.tempMin);
+            DayViewHolder dvh = new DayViewHolder(v);
+            dvh.cv.setMinimumHeight(height);
+            dvh.cv.setCardBackgroundColor(context.getResources().getColor(R.color.background));
+            TextView dayOfWeek = (TextView)dvh.cv.findViewById(R.id.dayOfWeek);
+            TextView weatherType = (TextView)dvh.cv.findViewById(R.id.weatherType);
+            TextView tempMax = (TextView)dvh.cv.findViewById(R.id.tempMax);
+            TextView tempMin = (TextView)dvh.cv.findViewById(R.id.tempMin);
             dayOfWeek.setTextColor(context.getResources().getColor(R.color.white));
             weatherType.setTextColor(context.getResources().getColor(R.color.white));
             tempMax.setTextColor(context.getResources().getColor(R.color.white));
             tempMin.setTextColor(context.getResources().getColor(R.color.white));
+            return new DayViewHolder(v);
         }
+        else {
+            v = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.recycler_item, viewGroup, false);
+            return new DayViewHolder(v);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
         dayViewHolder.cv.setTag(days.get(i).date);
         dayViewHolder.appPhoto.setImageResource(days.get(i).photoId);
         dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherDescription);
-        dayViewHolder.dayOfWeek.setText(days.get(i).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
+        if (i == 0)
+            dayViewHolder.dayOfWeek.setText(context.getString(R.string.today).concat(", ")
+                    .concat(days.get(i).date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()))
+                    .concat(" ")
+                    .concat(Integer.toString(days.get(i).date.get(Calendar.DAY_OF_MONTH))));
+        else
+            dayViewHolder.dayOfWeek.setText(days.get(i).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
         dayViewHolder.weatherType.setText(days.get(i).weatherDescription);
         dayViewHolder.tempMax.setText(String.format("%.1f",days.get(i).tempMax).concat("\u00B0"));
         dayViewHolder.tempMin.setText(String.format( "%.1f",days.get(i).tempMin).concat("\u00B0"));
