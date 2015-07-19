@@ -55,8 +55,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
         switch (position) {
             case 0:
                 return 0;
-            default:
+            case 1:
                 return 1;
+            default:
+                return 2;
         }
     }
 
@@ -100,24 +102,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
 
     @Override
     public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
-        dayViewHolder.cv.setTag(days.get(i).date);
-        dayViewHolder.appPhoto.setImageResource(days.get(i).photoId);
+        dayViewHolder.cv.setTag(days.get(i).getDate());
         dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherDescription);
-        if (i == 0)
+        if (i == 0) {
+            dayViewHolder.appPhoto.setImageResource(Util.getFeaturedWeatherIcon(days.get(i).getIconCode()));
             dayViewHolder.dayOfWeek.setText(context.getString(R.string.today).concat(", ")
-                    .concat(days.get(i).date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()))
+                    .concat(days.get(i).getDate().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()))
                     .concat(" ")
-                    .concat(Integer.toString(days.get(i).date.get(Calendar.DAY_OF_MONTH))));
-        else
-            dayViewHolder.dayOfWeek.setText(days.get(i).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
+                    .concat(Integer.toString(days.get(i).getDate().get(Calendar.DAY_OF_MONTH))));
+        }
+        else if (i == 1) {
+            dayViewHolder.appPhoto.setImageResource(Util.getItemWeatherIcon(days.get(i).getIconCode()));
+            dayViewHolder.dayOfWeek.setText(context.getString(R.string.tomorrow));
+        }
+        else {
+            dayViewHolder.appPhoto.setImageResource(Util.getItemWeatherIcon(days.get(i).getIconCode()));
+            dayViewHolder.dayOfWeek.setText(days.get(i).getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
+        }
         dayViewHolder.weatherType.setText(days.get(i).weatherDescription);
-        dayViewHolder.tempMax.setText(String.format("%.1f",days.get(i).tempMax).concat("\u00B0"));
-        dayViewHolder.tempMin.setText(String.format( "%.1f",days.get(i).tempMin).concat("\u00B0"));
+        dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
+        dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
         dayViewHolder.cv.setOnClickListener(clickListener);
     }
 
     @Override
     public int getItemCount() {
-        return days.size();
+        return days == null ? 0 : days.size();
     }
 }

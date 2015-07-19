@@ -5,26 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
-    android:id="@+id/snackbarPosition"
-    tools:context=".MainActivity$PlaceholderFragment">
-
-    <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="7"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="60dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/list_item_date_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/white" />
-    </LinearLayout>
+    android:id="@+id/tenDayForecastCoordinatorLayout"
+    tools:context=".MainActivity$TenDayForecastFragment">
 
     <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"

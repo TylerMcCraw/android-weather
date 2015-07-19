@@ -1,26 +1,19 @@
 package com.w3bshark.android_weather;
 
-import android.app.ActionBar;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * Created by w3bshark on 6/28/2015.
@@ -65,7 +58,7 @@ public class TenDayForecastFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
-        mCoordinatorLayoutView = rootView.findViewById(R.id.snackbarPosition);
+        mCoordinatorLayoutView = rootView.findViewById(R.id.tenDayForecastCoordinatorLayout);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -105,20 +98,20 @@ public class TenDayForecastFragment extends Fragment {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String snackMessage;
-                int itemPosition = mRecyclerView.getChildPosition(v);
-                snackMessage = days.get(itemPosition).date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-//                if (v instanceof CardView) {
-//                    CardView cv = (CardView) v;
-//                    int cardViewID;
-//                    try {
-//                        cardViewID = Integer.parseInt(cv.getTag().toString());
-//                    } catch (NumberFormatException nfe) {
-//                        cardViewID = 0;
-//                    }
+            int itemPosition = mRecyclerView.getChildPosition(v);
+            Intent detailIntent = new Intent(getActivity(), DetailActivity.class)
+                    .putExtra(DetailActivity.EXTRASCURRENTDAY, days.get(itemPosition));
+            startActivity(detailIntent);
+
+//            if (v instanceof CardView) {
+//                CardView cv = (CardView) v;
+//                int cardViewID;
+//                try {
+//                    cardViewID = Integer.parseInt(cv.getTag().toString());
+//                } catch (NumberFormatException nfe) {
+//                    cardViewID = 0;
 //                }
-                Snackbar.make(mCoordinatorLayoutView, snackMessage, Snackbar.LENGTH_SHORT)
-                        .show();
+//            }
             }
         };
 

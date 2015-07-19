@@ -37,7 +37,7 @@
 
     <!-- Fonts -->
     <style name="AppTheme.TextStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
 </resources>

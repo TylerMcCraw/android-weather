@@ -61,100 +61,12 @@ public class OWMDataParser {
             // "temp" when working with temperature.  It confuses everybody.
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
 
-            int iconID;
-            if (i == 0) {
-                switch (icon)
-                {
-                    case "01d":
-                        iconID = R.drawable.weather_sunny_white;
-                        break;
-                    case "01n":
-                        iconID = R.drawable.weather_night_white;
-                        break;
-                    case "02d":
-                    case "02n":
-                        iconID = R.drawable.weather_partlycloudy_white;
-                        break;
-                    case "03d":
-                    case "03n":
-                        iconID = R.drawable.weather_cloudy_white;
-                        break;
-                    case "04d":
-                    case "04n":
-                        iconID = R.drawable.weather_partlycloudy_white;
-                        break;
-                    case "09d":
-                    case "09n":
-                        iconID = R.drawable.weather_pouring_white;
-                        break;
-                    case "10d":
-                    case "10n":
-                        iconID = R.drawable.weather_rainy_white;
-                        break;
-                    case "11d":
-                    case "11n":
-                        iconID = R.drawable.weather_lightning_white;
-                        break;
-                    case "13d":
-                    case "13n":
-                        iconID = R.drawable.weather_snowy_white;
-                        break;
-                    case "50d":
-                    case "50n":
-                        iconID = R.drawable.weather_rainy_white;
-                        break;
-                    default:
-                        iconID = R.drawable.weather_sunny_white;
-                        break;
-                }
-            }
-            else {
-                switch (icon) {
-                    case "01d":
-                        iconID = R.drawable.weather_sunny;
-                        break;
-                    case "01n":
-                        iconID = R.drawable.weather_night;
-                        break;
-                    case "02d":
-                    case "02n":
-                        iconID = R.drawable.weather_partlycloudy;
-                        break;
-                    case "03d":
-                    case "03n":
-                        iconID = R.drawable.weather_cloudy;
-                        break;
-                    case "04d":
-                    case "04n":
-                        iconID = R.drawable.weather_partlycloudy;
-                        break;
-                    case "09d":
-                    case "09n":
-                        iconID = R.drawable.weather_pouring;
-                        break;
-                    case "10d":
-                    case "10n":
-                        iconID = R.drawable.weather_rainy;
-                        break;
-                    case "11d":
-                    case "11n":
-                        iconID = R.drawable.weather_lightning;
-                        break;
-                    case "13d":
-                    case "13n":
-                        iconID = R.drawable.weather_snowy;
-                        break;
-                    case "50d":
-                    case "50n":
-                        iconID = R.drawable.weather_rainy;
-                        break;
-                    default:
-                        iconID = R.drawable.weather_sunny;
-                        break;
-                }
-            }
-
-            Day currDay = new Day(gc, temperatureObject.getDouble(OWM_MAX), temperatureObject.getDouble(OWM_MIN), description, iconID);
+            Day currDay = new Day();
+            currDay.setDateInMillis(gc.getTimeInMillis());
+            currDay.setTempMax(temperatureObject.getDouble(OWM_MAX));
+            currDay.setTempMin(temperatureObject.getDouble(OWM_MIN));
+            currDay.setWeatherDescription(description);
+            currDay.setIconCode(icon);
             forecastDays.add(currDay);
         }
 
