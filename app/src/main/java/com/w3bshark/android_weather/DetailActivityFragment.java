@@ -62,7 +62,7 @@ public class DetailActivityFragment extends Fragment {
                 dayText.setText(getActivity().getApplicationContext().getString(R.string.today));
             }
             else if (selectedCalDate.equals(tomorrow)) {
-                dayText.setText(getActivity().getApplicationContext().getString(R.string.today));
+                dayText.setText(getActivity().getApplicationContext().getString(R.string.tomorrow));
             }
             else {
                 dayText.setText(selectedDay.getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));

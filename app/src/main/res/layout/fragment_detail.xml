@@ -42,10 +42,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:id="@+id/detail_high_textview"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:textSize="96sp" />
 
                 <TextView
@@ -54,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textColor="@color/primary_text_default_material_light"
+                    android:fontFamily="sans-serif-light"
                     android:textSize="48sp" />
             </LinearLayout>
 
