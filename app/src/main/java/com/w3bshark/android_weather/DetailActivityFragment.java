@@ -72,22 +72,20 @@ public class DetailActivityFragment extends Fragment {
                     .concat(Integer.toString(selectedDay.getDate().get(Calendar.DAY_OF_MONTH))));
 
             // Handle Imperial vs Metric preference
+            TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
+            TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
             SharedPreferences sharedPrefs =
                     PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             String unitType = sharedPrefs.getString(
                     getActivity().getApplicationContext().getString(R.string.pref_units_key),
                     getActivity().getApplicationContext().getString(R.string.pref_units_metric));
             if (unitType != null && unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_imperial))) {
-                TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
-                maxTemp.setText(String.format("%.0f", selectedDay.getTempMax()).concat("\u00B0"));
-                TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
-                minTemp.setText(String.format("%.0f", selectedDay.getTempMin()).concat("\u00B0"));
+                maxTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0"));
+                minTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0"));
             }
             else {
-                TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
-                maxTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0"));
-                TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
-                minTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0"));
+                maxTemp.setText(String.format("%.0f", selectedDay.getTempMax()).concat("\u00B0"));
+                minTemp.setText(String.format("%.0f", selectedDay.getTempMin()).concat("\u00B0"));
             }
 
             ImageView image = (ImageView) detailFragment.findViewById(R.id.detail_icon);

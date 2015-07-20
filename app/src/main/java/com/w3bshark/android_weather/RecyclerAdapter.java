@@ -129,13 +129,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
         String unitType = sharedPrefs.getString(
                 context.getString(R.string.pref_units_key),
                 context.getString(R.string.pref_units_metric));
-        if (unitType != null && unitType.equals(context.getString(R.string.pref_units_imperial))) {
-            dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
-            dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
-        }
-        else {
+        if (unitType != null && unitType.equals(context.getString(R.string.pref_units_metric))) {
             dayViewHolder.tempMax.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMax)).concat("\u00B0"));
             dayViewHolder.tempMin.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMin)).concat("\u00B0"));
+        }
+        else {
+            dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
         }
         dayViewHolder.cv.setOnClickListener(clickListener);
     }
