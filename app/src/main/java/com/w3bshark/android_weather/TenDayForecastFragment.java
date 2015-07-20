@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public class TenDayForecastFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Day> days;
     private View mCoordinatorLayoutView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,32 +35,12 @@ public class TenDayForecastFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.tendayforecastfragment, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_refresh:
-                initializeData();
-                initializeAdapter();
-                mRecyclerView.refreshDrawableState();
-                return true;
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
-        mCoordinatorLayoutView = rootView.findViewById(R.id.tenDayForecastCoordinatorLayout);
+        mCoordinatorLayoutView = rootView.findViewById(R.id.tendayforecast_coordinator_layout);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -68,6 +50,17 @@ public class TenDayForecastFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         initializeData();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.tendayforecast_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initializeData();
+                initializeAdapter();
+                mRecyclerView.refreshDrawableState();
+            }
+        });
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.swiperefresh);
 
         return rootView;
     }
@@ -89,6 +82,7 @@ public class TenDayForecastFragment extends Fragment {
                 else {
                     mRecyclerAdapter.notifyDataSetChanged();
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         };
         tenDayForecastHandler.execute(location);
@@ -98,10 +92,10 @@ public class TenDayForecastFragment extends Fragment {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            int itemPosition = mRecyclerView.getChildPosition(v);
-            Intent detailIntent = new Intent(getActivity(), DetailActivity.class)
-                    .putExtra(DetailActivity.EXTRASCURRENTDAY, days.get(itemPosition));
-            startActivity(detailIntent);
+                int itemPosition = mRecyclerView.getChildLayoutPosition(v);
+                Intent detailIntent = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(DetailActivity.EXTRASCURRENTDAY, days.get(itemPosition));
+                startActivity(detailIntent);
 
 //            if (v instanceof CardView) {
 //                CardView cv = (CardView) v;

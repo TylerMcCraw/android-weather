@@ -34,6 +34,7 @@
     <color name="actionbar">#4FC3F7</color>
     <color name="statusbar">#03A9F4</color>
     <color name="background">#4FC3F7</color>
+    <color name="swiperefresh">#4FC3F7</color>
 
     <!-- Fonts -->
     <style name="AppTheme.TextStyle" parent="android:Widget.TextView">

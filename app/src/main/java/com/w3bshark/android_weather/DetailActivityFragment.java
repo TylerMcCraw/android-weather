@@ -1,6 +1,8 @@
 package com.w3bshark.android_weather;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,10 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 
@@ -72,10 +71,24 @@ public class DetailActivityFragment extends Fragment {
                     .concat(" ")
                     .concat(Integer.toString(selectedDay.getDate().get(Calendar.DAY_OF_MONTH))));
 
-            TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
-            maxTemp.setText(String.format("%.0f",selectedDay.getTempMax()).concat("\u00B0"));
-            TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
-            minTemp.setText(String.format("%.0f",selectedDay.getTempMin()).concat("\u00B0"));
+            // Handle Imperial vs Metric preference
+            SharedPreferences sharedPrefs =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            String unitType = sharedPrefs.getString(
+                    getActivity().getApplicationContext().getString(R.string.pref_units_key),
+                    getActivity().getApplicationContext().getString(R.string.pref_units_metric));
+            if (unitType != null && unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_imperial))) {
+                TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
+                maxTemp.setText(String.format("%.0f", selectedDay.getTempMax()).concat("\u00B0"));
+                TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
+                minTemp.setText(String.format("%.0f", selectedDay.getTempMin()).concat("\u00B0"));
+            }
+            else {
+                TextView maxTemp = (TextView) detailFragment.findViewById(R.id.detail_high_textview);
+                maxTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0"));
+                TextView minTemp = (TextView) detailFragment.findViewById(R.id.detail_low_textview);
+                minTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0"));
+            }
 
             ImageView image = (ImageView) detailFragment.findViewById(R.id.detail_icon);
             image.setImageResource(Util.getFeaturedWeatherIcon(selectedDay.getIconCode()));

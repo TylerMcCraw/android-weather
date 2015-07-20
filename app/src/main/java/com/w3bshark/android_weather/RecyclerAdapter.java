@@ -1,7 +1,9 @@
 package com.w3bshark.android_weather;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -120,8 +122,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
             dayViewHolder.dayOfWeek.setText(days.get(i).getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
         }
         dayViewHolder.weatherType.setText(days.get(i).weatherDescription);
-        dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
-        dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
+
+        // Handle Imperial vs Metric preference
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        String unitType = sharedPrefs.getString(
+                context.getString(R.string.pref_units_key),
+                context.getString(R.string.pref_units_metric));
+        if (unitType != null && unitType.equals(context.getString(R.string.pref_units_imperial))) {
+            dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
+        }
+        else {
+            dayViewHolder.tempMax.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMax)).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMin)).concat("\u00B0"));
+        }
         dayViewHolder.cv.setOnClickListener(clickListener);
     }
 

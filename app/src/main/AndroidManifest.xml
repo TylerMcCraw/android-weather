@@ -3,7 +3,8 @@
     package="com.w3bshark.android_weather" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/art_clear"
@@ -18,10 +19,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.w3bshark.android_weather.DetailActivity"
+        <activity
+            android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName="com.w3bshark.android_weather.MainActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.w3bshark.android_weather.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.w3bshark.android_weather.MainActivity" />
         </activity>
     </application>
