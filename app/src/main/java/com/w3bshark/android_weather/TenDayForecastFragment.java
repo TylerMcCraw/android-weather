@@ -74,8 +74,10 @@ public class TenDayForecastFragment extends Fragment {
         {
             @Override
             protected void onPostExecute(ArrayList<Day> result) {
-                days.clear();
-                days.addAll(result);
+                if (result != null && !result.isEmpty()) {
+                    days.clear();
+                    days.addAll(result);
+                }
                 if (mRecyclerAdapter == null) {
                     initializeAdapter();
                 }
