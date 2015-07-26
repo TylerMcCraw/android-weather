@@ -8,6 +8,8 @@ This data is pulled from OpenWeatherMap, an open-source API for retrieving weath
 
 ![Udacity Sunshine App](https://raw.githubusercontent.com/TylerMcCraw/android-weather/master/android_weather_nexus5.png)
 
+If you would, as a developer, like to use your own OpenWeatherMap API Key, please fill go to http://openweathermap.org/api to generate your own API key and fill this into the constant OWM_APIKEY in the TenDayForecastHandler.java class
+
 ## Credits
 
 Inspirational design of application: https://github.com/udacity/Sunshine-Version-2
