@@ -105,7 +105,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
     @Override
     public void onBindViewHolder(DayViewHolder dayViewHolder, int i) {
         dayViewHolder.cv.setTag(days.get(i).getDate());
-        dayViewHolder.appPhoto.setContentDescription(days.get(i).weatherDescription);
+        dayViewHolder.appPhoto.setContentDescription(days.get(i).getWeatherDescription());
         if (i == 0) {
             dayViewHolder.appPhoto.setImageResource(Util.getFeaturedWeatherIcon(days.get(i).getIconCode()));
             dayViewHolder.dayOfWeek.setText(context.getString(R.string.today).concat(", ")
