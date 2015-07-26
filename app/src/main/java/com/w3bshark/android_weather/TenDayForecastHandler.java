@@ -36,12 +36,11 @@ public class TenDayForecastHandler extends AsyncTask <Location, Void, ArrayList<
     private final static String OWM_PARAM_UNITS = "units";
     private final static String OWM_PARAM_DAYCOUNT = "cnt";
     private final static String OWM_PARAM_APIKEY = "APPID";
-    private final static String OWM_APIKEY = "";
+    private final static String OWM_APIKEY = "022d10b654648a3097c21e889f15539a";
     private String dataProtocol = "http";
     private String dataMode = "json";
     private String dataUnits = "imperial";
     private String dataDays = "10";
-    private String dataCountryCode = "us";
     private HttpURLConnection urlConnection = null;
     private BufferedReader reader = null;
 
