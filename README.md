@@ -6,6 +6,8 @@ This is the companion Android app for the Udacity course [Developing Android App
 android-weather allows users to view the current ten-day forecast for their current location.
 This data is pulled from OpenWeatherMap, an open-source API for retrieving weather data across the world.
 
+![Udacity Sunshine App](https://raw.githubusercontent.com/TylerMcCraw/android-weather/master/android_weather_nexus5.png)
+
 ## Credits
 
 Inspirational design of application: https://github.com/udacity/Sunshine-Version-2
