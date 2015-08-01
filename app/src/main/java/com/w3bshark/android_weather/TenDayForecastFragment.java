@@ -63,7 +63,9 @@ public class TenDayForecastFragment extends Fragment {
     }
 
     private void initializeData(){
-        days = new ArrayList<>();
+        if (days == null) {
+            days = new ArrayList<>();
+        }
 
         MainActivity mainActivity = (MainActivity) getActivity();
         Location location = mainActivity.getLocation();
@@ -73,6 +75,8 @@ public class TenDayForecastFragment extends Fragment {
             protected void onPostExecute(ArrayList<Day> result) {
                 if (result != null && !result.isEmpty()) {
                     days.clear();
+                    // It is required to call addAll because this causes the
+                    // recycleradapter to realize that there is new data and to refresh the view
                     days.addAll(result);
                 }
                 if (mRecyclerAdapter == null) {
