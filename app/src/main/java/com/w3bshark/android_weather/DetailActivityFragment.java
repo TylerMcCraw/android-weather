@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Tyler McCraw
+ */
+
 package com.w3bshark.android_weather;
 
 import android.content.SharedPreferences;
@@ -14,10 +18,6 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Locale;
 
-
-/**
- * A placeholder fragment containing a simple view.
- */
 public class DetailActivityFragment extends Fragment {
 
     private Day selectedDay;

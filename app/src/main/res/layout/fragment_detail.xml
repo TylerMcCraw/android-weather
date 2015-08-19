@@ -1,7 +1,12 @@
+<!--
+  ~ Copyright (c) 2015. Tyler McCraw
+  -->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--TODO: Move dimensions to dimens.xml -->
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_gravity="start"
@@ -31,8 +36,8 @@
         <LinearLayout
             android:gravity="center_horizontal"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <LinearLayout

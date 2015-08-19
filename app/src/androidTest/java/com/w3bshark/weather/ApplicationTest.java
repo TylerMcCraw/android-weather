@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Tyler McCraw
+ */
+
 package com.example.android.sunshine.app;
 
 import android.app.Application;
