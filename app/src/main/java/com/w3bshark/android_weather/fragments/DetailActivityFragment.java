@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,12 +15,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.w3bshark.android_weather.R;
+import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.activities.DetailActivity;
+import com.w3bshark.android_weather.model.Day;
+
 import java.util.Calendar;
 import java.util.Locale;
 
 public class DetailActivityFragment extends Fragment {
 
     private Day selectedDay;
+    // Day parcelable key for saving instance state
+    private static final String SAVED_DAY = "SAVED_DAY";
 
     public DetailActivityFragment() {
     }
@@ -28,14 +35,25 @@ public class DetailActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        // Attempt to restore from savedInstanceState
+        if (savedInstanceState != null) {
+            selectedDay = savedInstanceState.getParcelable(SAVED_DAY);
+        }
+
         View detailFragment = inflater.inflate(R.layout.fragment_detail, container, false);
         if (getActivity().getIntent() == null || !getActivity().getIntent().hasExtra(DetailActivity.EXTRASCURRENTDAY)) {
             String snackMessage;
             snackMessage = getActivity().getApplicationContext().getString(R.string.error_unexpected);
-            Snackbar.make(this.getView(), snackMessage, Snackbar.LENGTH_SHORT).show();
+            if (this.getView() != null) {
+                Snackbar.make(this.getView(), snackMessage, Snackbar.LENGTH_SHORT).show();
+            }
         }
         else {
-            selectedDay = getActivity().getIntent().getParcelableExtra(DetailActivity.EXTRASCURRENTDAY);
+            if (selectedDay == null) {
+                selectedDay = getActivity().getIntent().getParcelableExtra(DetailActivity.EXTRASCURRENTDAY);
+            }
 
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR_OF_DAY, 0);
@@ -79,7 +97,7 @@ public class DetailActivityFragment extends Fragment {
             String unitType = sharedPrefs.getString(
                     getActivity().getApplicationContext().getString(R.string.pref_units_key),
                     getActivity().getApplicationContext().getString(R.string.pref_units_metric));
-            if (unitType != null && unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_imperial))) {
+            if (unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_imperial))) {
                 maxTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0"));
                 minTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0"));
             }
@@ -95,5 +113,15 @@ public class DetailActivityFragment extends Fragment {
         }
 
         return detailFragment;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        if (getActivity().getIntent() != null &&
+                getActivity().getIntent().getParcelableExtra(DetailActivity.EXTRASCURRENTDAY) != null) {
+            savedInstanceState.putParcelable(SAVED_DAY,
+                    getActivity().getIntent().getParcelableExtra(DetailActivity.EXTRASCURRENTDAY));
+        }
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

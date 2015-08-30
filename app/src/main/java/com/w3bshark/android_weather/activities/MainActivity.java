@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -22,8 +22,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.List;
+import com.w3bshark.android_weather.R;
+import com.w3bshark.android_weather.fragments.TenDayForecastFragment;
 
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

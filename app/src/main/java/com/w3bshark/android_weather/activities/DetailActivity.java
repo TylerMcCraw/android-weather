@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +15,11 @@ import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.w3bshark.android_weather.R;
+import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.fragments.DetailActivityFragment;
+import com.w3bshark.android_weather.model.Day;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -105,7 +110,7 @@ public class DetailActivity extends AppCompatActivity {
         String unitType = sharedPrefs.getString(
                 getApplicationContext().getString(R.string.pref_units_key),
                 getApplicationContext().getString(R.string.pref_units_metric));
-        if (unitType != null && unitType.equals(getApplicationContext().getString(R.string.pref_units_imperial))) {
+        if (unitType.equals(getApplicationContext().getString(R.string.pref_units_imperial))) {
             maxTemp = String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0");
             minTemp = String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0");
         }
@@ -121,7 +126,7 @@ public class DetailActivity extends AppCompatActivity {
                 .concat(" ")
                 .concat(Integer.toString(selectedDay.getDate().get(Calendar.DAY_OF_MONTH)))
                 .concat(" - ")
-                .concat(selectedDay.weatherDescription)
+                .concat(selectedDay.getWeatherDescription())
                 .concat(" - ")
                 .concat(maxTemp)
                 .concat(" / ")

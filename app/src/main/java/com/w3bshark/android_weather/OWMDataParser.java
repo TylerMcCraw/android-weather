@@ -4,6 +4,8 @@
 
 package com.w3bshark.android_weather;
 
+import com.w3bshark.android_weather.model.Day;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Created by w3bshark on 7/3/2015.
- */
 public class OWMDataParser {
 
     // These are the names of the JSON objects that need to be extracted.

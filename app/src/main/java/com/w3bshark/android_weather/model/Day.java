@@ -2,16 +2,13 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Calendar;
 
-/**
- * Created by w3bshark on 6/27/2015.
- */
 public class Day implements Parcelable {
 
     long dateInMillis;
@@ -20,7 +17,7 @@ public class Day implements Parcelable {
     String weatherDescription;
     String iconCode;
 
-    Day() {}
+    public Day() {}
 
     Day(Parcel in) {
         this.dateInMillis = in.readLong();

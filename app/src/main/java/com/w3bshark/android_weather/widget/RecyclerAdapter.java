@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,13 +18,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.w3bshark.android_weather.R;
+import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.model.Day;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by w3bshark on 6/21/2015.
- */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayViewHolder> {
 
     public static class DayViewHolder extends RecyclerView.ViewHolder {
@@ -50,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
     List<Day> days;
     View.OnClickListener clickListener;
 
-    RecyclerAdapter(Context context, List<Day> days, View.OnClickListener clickListener) {
+    public RecyclerAdapter(Context context, List<Day> days, View.OnClickListener clickListener) {
         this.context = context;
         this.days = days;
         this.clickListener = clickListener;
@@ -125,7 +126,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
             dayViewHolder.appPhoto.setImageResource(Util.getItemWeatherIcon(days.get(i).getIconCode()));
             dayViewHolder.dayOfWeek.setText(days.get(i).getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
         }
-        dayViewHolder.weatherType.setText(days.get(i).weatherDescription);
+        dayViewHolder.weatherType.setText(days.get(i).getWeatherDescription());
 
         // Handle Imperial vs Metric preference
         SharedPreferences sharedPrefs =
@@ -134,12 +135,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
                 context.getString(R.string.pref_units_key),
                 context.getString(R.string.pref_units_metric));
         if (unitType != null && unitType.equals(context.getString(R.string.pref_units_metric))) {
-            dayViewHolder.tempMax.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMax)).concat("\u00B0"));
-            dayViewHolder.tempMin.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).tempMin)).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(days.get(i).getTempMax())).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).getTempMin())).concat("\u00B0"));
         }
         else {
-            dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).tempMax).concat("\u00B0"));
-            dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).tempMin).concat("\u00B0"));
+            dayViewHolder.tempMax.setText(String.format("%.0f",days.get(i).getTempMax()).concat("\u00B0"));
+            dayViewHolder.tempMin.setText(String.format("%.0f",days.get(i).getTempMin()).concat("\u00B0"));
         }
         dayViewHolder.cv.setOnClickListener(clickListener);
     }

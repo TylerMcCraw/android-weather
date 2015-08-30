@@ -1,10 +1,18 @@
-package com.w3bshark.android_weather;
+/*
+ * Copyright (c) 2015. Tyler McCraw
+ */
+
+package com.w3bshark.android_weather.rest;
 
 import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.w3bshark.android_weather.OWMDataParser;
+import com.w3bshark.android_weather.R;
+import com.w3bshark.android_weather.model.Day;
 
 import org.json.JSONException;
 
@@ -16,9 +24,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by w3bshark on 7/3/2015.
- */
 public class TenDayForecastHandler extends AsyncTask <Location, Void, ArrayList<Day>> {
 
     private final static String LOG_TAG = TenDayForecastHandler.class.getSimpleName();
