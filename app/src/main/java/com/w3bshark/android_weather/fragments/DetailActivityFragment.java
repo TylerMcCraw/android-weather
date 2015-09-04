@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.w3bshark.android_weather.R;
-import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.utils.Util;
 import com.w3bshark.android_weather.activities.DetailActivity;
 import com.w3bshark.android_weather.model.Day;
 
@@ -97,7 +97,7 @@ public class DetailActivityFragment extends Fragment {
             String unitType = sharedPrefs.getString(
                     getActivity().getApplicationContext().getString(R.string.pref_units_key),
                     getActivity().getApplicationContext().getString(R.string.pref_units_metric));
-            if (unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_imperial))) {
+            if (unitType.equals(getActivity().getApplicationContext().getString(R.string.pref_units_metric))) {
                 maxTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMax())).concat("\u00B0"));
                 minTemp.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(selectedDay.getTempMin())).concat("\u00B0"));
             }

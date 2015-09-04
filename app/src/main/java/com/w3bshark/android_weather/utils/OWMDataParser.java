@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.utils;
 
 import com.w3bshark.android_weather.model.Day;
 

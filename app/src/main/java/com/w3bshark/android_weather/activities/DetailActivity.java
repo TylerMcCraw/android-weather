@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.w3bshark.android_weather.R;
-import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.utils.Util;
 import com.w3bshark.android_weather.fragments.DetailActivityFragment;
 import com.w3bshark.android_weather.model.Day;
 

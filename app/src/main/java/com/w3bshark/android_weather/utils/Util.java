@@ -2,7 +2,9 @@
  * Copyright (c) 2015. Tyler McCraw
  */
 
-package com.w3bshark.android_weather;
+package com.w3bshark.android_weather.utils;
+
+import com.w3bshark.android_weather.R;
 
 /**
  * Created by w3bshark on 6/27/2015.

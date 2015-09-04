@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.w3bshark.android_weather.R;
-import com.w3bshark.android_weather.Util;
+import com.w3bshark.android_weather.utils.Util;
 import com.w3bshark.android_weather.model.Day;
 
 import java.util.Calendar;
@@ -134,7 +134,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.DayVie
         String unitType = sharedPrefs.getString(
                 context.getString(R.string.pref_units_key),
                 context.getString(R.string.pref_units_metric));
-        if (unitType != null && unitType.equals(context.getString(R.string.pref_units_metric))) {
+        if (unitType.equals(context.getString(R.string.pref_units_metric))) {
             dayViewHolder.tempMin.setText(String.format("%.0f", Util.convertFahrenheitToCelcius(days.get(i).getTempMax())).concat("\u00B0"));
             dayViewHolder.tempMin.setText(String.format("%.0f",Util.convertFahrenheitToCelcius(days.get(i).getTempMin())).concat("\u00B0"));
         }

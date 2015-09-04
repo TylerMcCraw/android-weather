@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.w3bshark.android_weather.OWMDataParser;
+import com.w3bshark.android_weather.utils.OWMDataParser;
 import com.w3bshark.android_weather.R;
 import com.w3bshark.android_weather.model.Day;
 
