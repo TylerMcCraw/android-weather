@@ -24,6 +24,9 @@ public class OWMDataParser {
     private final static String OWM_MIN = "min";
     private final static String OWM_DESCRIPTION = "main";
     private final static String OWM_ICON = "icon";
+    private final static String OWM_HUMIDITY = "humidity";
+    private final static String OWM_PRESSURE = "pressure";
+    private final static String OWM_WIND = "speed";
 
     /**
      * Take the String representing the complete forecast in JSON Format and
@@ -60,6 +63,10 @@ public class OWMDataParser {
             String description = weatherObject.getString(OWM_DESCRIPTION);
             String icon = weatherObject.getString(OWM_ICON);
 
+            Double humidity = dayForecast.getDouble(OWM_HUMIDITY);
+            Double pressure = dayForecast.getDouble(OWM_PRESSURE);
+            Double wind = dayForecast.getDouble(OWM_WIND);
+
             // Temperatures are in a child object called "temp".  Try not to name variables
             // "temp" when working with temperature.  It confuses everybody.
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
@@ -70,6 +77,9 @@ public class OWMDataParser {
             currDay.setTempMin(temperatureObject.getDouble(OWM_MIN));
             currDay.setWeatherDescription(description);
             currDay.setIconCode(icon);
+            currDay.setHumidity(humidity);
+            currDay.setPressure(pressure);
+            currDay.setWind(wind);
             forecastDays.add(currDay);
         }
 

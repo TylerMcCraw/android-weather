@@ -16,6 +16,10 @@ public class Day implements Parcelable {
     double tempMin;
     String weatherDescription;
     String iconCode;
+    double humidity;
+    double pressure;
+    double wind;
+    String windDirection;
 
     public Day() {}
 
@@ -26,6 +30,10 @@ public class Day implements Parcelable {
         this.weatherDescription = in.readString();
 //        this.tempCelcius = Util.convertFahrenheitToCelcius(tempFahrenheit);
         this.iconCode = in.readString();
+        this.humidity = in.readDouble();
+        this.pressure = in.readDouble();
+        this.wind = in.readDouble();
+        this.windDirection = in.readString();
     }
 
     @Override
@@ -40,6 +48,10 @@ public class Day implements Parcelable {
         dest.writeDouble(tempMin);
         dest.writeString(weatherDescription);
         dest.writeString(iconCode);
+        dest.writeDouble(humidity);
+        dest.writeDouble(pressure);
+        dest.writeDouble(wind);
+        dest.writeString(windDirection);
     }
 
     public static final Parcelable.Creator<Day> CREATOR
@@ -98,5 +110,37 @@ public class Day implements Parcelable {
 
     public void setIconCode(String iconCode) {
         this.iconCode = iconCode;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(double pressure) {
+        this.pressure = pressure;
+    }
+
+    public double getWind() {
+        return wind;
+    }
+
+    public void setWind(double wind) {
+        this.wind = wind;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
     }
 }

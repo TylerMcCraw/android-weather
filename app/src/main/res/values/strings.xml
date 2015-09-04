@@ -15,9 +15,14 @@
     <string name="error">Error</string>
     <string name="error_unexpected">Oops. Something went terribly wrong.</string>
     <string name="error_closing_stream">Error closing stream</string>
-    <string name="title_activity_detail">DetailActivity</string>
+
+    <!-- Detail Screen -->
+    <string name="title_activity_detail">Details</string>
     <string name="detail_todays_forecast">Today\'s Forecast</string>
     <string name="detail_share_hashtag">#SunshineApp</string>
+    <string name="detail_humidity">Humidity</string>
+    <string name="detail_pressure">Pressure</string>
+    <string name="detail_wind">Wind</string>
 
     <!-- Settings Screen -->
     <string name="title_activity_settings">Settings</string>

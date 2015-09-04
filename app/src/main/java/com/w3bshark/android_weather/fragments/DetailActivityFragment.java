@@ -74,6 +74,7 @@ public class DetailActivityFragment extends Fragment {
             selectedCalDate.set(Calendar.SECOND, 0);
             selectedCalDate.set(Calendar.MILLISECOND, 0);
 
+            // Day and Date
             TextView dayText = (TextView) detailFragment.findViewById(R.id.detail_day_textview);
             if (selectedCalDate.equals(today)) {
                 dayText.setText(getActivity().getApplicationContext().getString(R.string.today));
@@ -106,10 +107,24 @@ public class DetailActivityFragment extends Fragment {
                 minTemp.setText(String.format("%.0f", selectedDay.getTempMin()).concat("\u00B0"));
             }
 
+            // Weather image
             ImageView image = (ImageView) detailFragment.findViewById(R.id.detail_icon);
             image.setImageResource(Util.getFeaturedWeatherIcon(selectedDay.getIconCode()));
             TextView weatherDescr = (TextView) detailFragment.findViewById(R.id.detail_forecast_textview);
             weatherDescr.setText(selectedDay.getWeatherDescription());
+
+            // Humidity
+            TextView humidityText = (TextView) detailFragment.findViewById(R.id.detail_humidity_textview);
+            humidityText.setText(getString(R.string.detail_humidity).concat(": ").concat(String.format("%.0f", selectedDay.getHumidity())).concat(" %"));
+
+
+            // Pressure
+            TextView pressureText = (TextView) detailFragment.findViewById(R.id.detail_pressure_textview);
+            pressureText.setText(getString(R.string.detail_pressure).concat(": ").concat(String.format("%.0f", selectedDay.getPressure())).concat(" hPa"));
+
+            // Wind
+            TextView windText = (TextView) detailFragment.findViewById(R.id.detail_wind_textview);
+            windText.setText(getString(R.string.detail_wind).concat(": ").concat(String.format("%.0f", selectedDay.getWind())).concat(" km/h "));
         }
 
         return detailFragment;
