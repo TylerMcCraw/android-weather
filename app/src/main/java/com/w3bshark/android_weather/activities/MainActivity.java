@@ -5,6 +5,8 @@
 package com.w3bshark.android_weather.activities;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,8 +18,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +34,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Log tag to keep track of logs created against this class
+    private final static String LOG_TAG = MainActivity.class.getSimpleName();
     // The default search radius when searching for places nearby.
     public static int DEFAULT_RADIUS = 150;
     // The maximum distance the user should travel between location updates.
@@ -37,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public static long MAX_TIME = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
     // Intent action for udpating location quickly once
     public static String SINGLE_LOCATION_UPDATE_ACTION = "WEATHER_SINGLE_LOC_UPDATE";
+    // Notification ID for updating the notif later on
+    private static int mId = 1;
 
     private LocationManager mLocationManager;
     private final LocationListener mLocationListener = new LocationListener() {
@@ -132,34 +141,39 @@ public class MainActivity extends AppCompatActivity {
         long maxTime = minTime - 86400000; // minimum time to check for refresh should be exactly one day ago
         float bestAccuracy = Float.MAX_VALUE;
         long bestTime = 0;
-        List<String> matchingProviders = mLocationManager.getAllProviders();
-        for (String provider: matchingProviders) {
-            Location location = mLocationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                float accuracy = location.getAccuracy();
-                long time = location.getTime();
 
-                if ((time > minTime && accuracy < bestAccuracy)) {
-                    bestResult = location;
-                    bestAccuracy = accuracy;
-                    bestTime = time;
-                }
-                else if (time < minTime &&
-                        bestAccuracy == Float.MAX_VALUE && time > bestTime) {
-                    bestResult = location;
-                    bestTime = time;
+        try {
+            List<String> matchingProviders = mLocationManager.getAllProviders();
+            for (String provider : matchingProviders) {
+                Location location = mLocationManager.getLastKnownLocation(provider);
+                if (location != null) {
+                    float accuracy = location.getAccuracy();
+                    long time = location.getTime();
+
+                    if ((time > minTime && accuracy < bestAccuracy)) {
+                        bestResult = location;
+                        bestAccuracy = accuracy;
+                        bestTime = time;
+                    } else if (time < minTime &&
+                            bestAccuracy == Float.MAX_VALUE && time > bestTime) {
+                        bestResult = location;
+                        bestTime = time;
+                    }
                 }
             }
-        }
 
-        if (mLocationListener != null &&
-                (bestTime < maxTime || bestAccuracy > MAX_DISTANCE)) {
-            IntentFilter locIntentFilter = new IntentFilter(SINGLE_LOCATION_UPDATE_ACTION);
-            getApplicationContext().registerReceiver(singleUpdateReceiver, locIntentFilter);
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_LOW);
-            singleUpatePI = PendingIntent.getBroadcast(getApplication(), 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            mLocationManager.requestSingleUpdate(criteria, singleUpatePI);
+            if (mLocationListener != null &&
+                    (bestTime < maxTime || bestAccuracy > MAX_DISTANCE)) {
+                IntentFilter locIntentFilter = new IntentFilter(SINGLE_LOCATION_UPDATE_ACTION);
+                getApplicationContext().registerReceiver(singleUpdateReceiver, locIntentFilter);
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_LOW);
+                singleUpatePI = PendingIntent.getBroadcast(getApplication(), 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                mLocationManager.requestSingleUpdate(criteria, singleUpatePI);
+            }
+        }
+        catch (SecurityException se) {
+            Log.e(LOG_TAG, "User has not given sufficient permissions for geolocation");
         }
 
         return bestResult;

@@ -1,8 +1,7 @@
 /*
  * Copyright (c) 2015. Tyler McCraw
  */
-
-package com.example.android.sunshine.app;
+package com.w3bshark.android_weather;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
